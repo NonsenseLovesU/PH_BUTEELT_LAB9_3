@@ -21,7 +21,7 @@ interface FlashCard {
  * @param definition
  * @returns new flash card
  */
-function newFlashCard (question: string, answer: string): FlashCard {
+function newFlashCard(question: string, answer: string): FlashCard {
   return {
     getQuestion: function (): string { return question },
     getAnswer: function (): string { return answer },

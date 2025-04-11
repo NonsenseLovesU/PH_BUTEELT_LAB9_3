@@ -1,6 +1,7 @@
 import { FlashCard } from './flashcard.js'
 
 interface CardStatus {
+  lastmistakeTime: number
   /**
    * Retrieves the {@link edu.cmu.cs214.hw1.cards.FlashCard} associated with this {@code CardStatus}.
    *
@@ -35,11 +36,21 @@ interface CardStatus {
  */
 function newCardStatus (card: FlashCard): CardStatus {
   let successes: boolean[] = []
+  let lastmistakeTime = 0
   return {
+    lastmistakeTime,
     getCard: function (): FlashCard { return card },
     getResults: function (): boolean[] { return successes.slice() },
-    recordResult: function (success: boolean): void { successes.push(success) },
-    clearResults: function (): void { successes = [] }
+    recordResult: function (success: boolean): void { 
+      successes.push(success) 
+      if(!success){
+        lastmistakeTime = Date.now();
+      }
+    },
+    clearResults: function (): void { 
+      successes = [] 
+      lastmistakeTime = 0
+    }
   }
 };
 
