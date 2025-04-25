@@ -8,8 +8,7 @@ const cards: CardStore = loadCards('cards/designpatterns.csv')
 
 // Change the next two lines to test your implementation
 // const organizer = newMostMistakesFirstSorter()
-// const organizer = newMostMistakesFirstSorter()
-const organizer = newRecentMistakesFirstSorter();
+const organizer = newRecentMistakesFirstSorter()
 
 const cardDeck = newCardDeck(cards.getAllCards(), organizer)
 newUI().studyCards(cardDeck)
