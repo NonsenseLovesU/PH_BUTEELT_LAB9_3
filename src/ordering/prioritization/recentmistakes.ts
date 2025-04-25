@@ -1,7 +1,7 @@
 import { CardStatus } from '../../cards/cardstatus.js'
 import { CardOrganizer } from '../cardorganizer.js'
 
-function newRecentMistakesFirstSorter(): CardOrganizer {
+function newRecentMistakesFirstSorter (): CardOrganizer {
   /**
    * Computes the most recent mistake's time stamp for a card and helps in
    * determining the sequence of cards in the next iteration, based on the
@@ -18,13 +18,19 @@ function newRecentMistakesFirstSorter(): CardOrganizer {
      * @return The ordered cards.
      */
     reorganize: function (cards: CardStatus[]): CardStatus[] {
-      return [...cards].sort((a, b) => {
-        const mistakeA = a.lastmistakeTime || 0
-        const mistakeB = b.lastmistakeTime || 0
-        return mistakeA - mistakeB;
-      });
+      return cards.slice().sort((a, b) => {
+        const aResults = a.getResults()
+        const bResults = b.getResults()
+
+        const aLast = aResults[aResults.length - 1]
+        const bLast = bResults[bResults.length - 1]
+
+        if (aLast === bLast) return 0
+        if (!aLast && bLast) return -1
+        return 1
+      })
     }
   }
-};
+}
 
 export { newRecentMistakesFirstSorter }
